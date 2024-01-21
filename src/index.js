@@ -1,4 +1,4 @@
-import {validateIp, addTileLayer, getAddress} from './helpers';
+import {validateIp, addTileLayer, getAddress, addOffset} from './helpers';
 import 'babel-polyfill';
 import 'leaflet/dist/leaflet.css';
 import L, { marker } from 'leaflet';
@@ -51,4 +51,12 @@ function drawData(data) {
 
     map.setView([lat, lng]);
     L.marker([lat, lng], {icon: myIcon}).addTo(map);
+    
+    if (matchMedia("(max-width: 1023px)").matches) {
+        addOffset(map);
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    getAddress('77.88.55.88').then(drawData);
+})
