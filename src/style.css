@@ -121,7 +121,7 @@
   .map {
     min-height: calc(100vh - 200px);
   }
-  
+
   @media (min-width: 1024px) {
     .info {
       flex-direction: row;
