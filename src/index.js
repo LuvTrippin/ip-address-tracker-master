@@ -1,4 +1,5 @@
-import {validateIp, addTileLayer} from './helpers';
+import {validateIp, addTileLayer, getAddress} from './helpers';
+import 'babel-polyfill';
 import 'leaflet/dist/leaflet.css';
 import L, { marker } from 'leaflet';
 import icon from '../images/icon-location.svg';
@@ -31,10 +32,7 @@ function getLocationData() {
     if (!validateIp(ipInput.value)) {
         return alert('You have to enter a valid ip address');
     }
-    fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=at_sCUImcAKFXTfV5PJkVYwqszboTmEj&ipAddress=${ipInput.value}`)
-        .then(response => response.json())
-        .then(drawData)
-        .catch();
+    getAddress(ipInput.value).then(drawData);
 }
 
 function handleKey(event) {
