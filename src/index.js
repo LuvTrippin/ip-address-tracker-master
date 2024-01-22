@@ -11,6 +11,7 @@ const ipInfo = document.querySelector('#ip');
 const locationInfo = document.querySelector('#location');
 const timezoneInfo = document.querySelector('#timezone');
 const ispInfo = document.querySelector('#isp');
+let prevMarker;
 
 btn.addEventListener('click', getLocationData);
 ipInput.addEventListener('keydown', handleKey);
@@ -26,7 +27,7 @@ const map = L.map(mapArea, {
     zoom: 13,
 });
 addTileLayer(map);
-L.marker([51.505, -0.09], {icon: myIcon}).addTo(map);
+prevMarker = L.marker([51.505, -0.09], {icon: myIcon}).addTo(map);
 
 function getLocationData() {
     if (!validateIp(ipInput.value)) {
@@ -50,7 +51,8 @@ function drawData(data) {
     ispInfo.innerText = data.isp;
 
     map.setView([lat, lng]);
-    L.marker([lat, lng], {icon: myIcon}).addTo(map);
+    map.removeLayer(prevMarker);
+    prevMarker = L.marker([lat, lng], {icon: myIcon}).addTo(map);
     
     if (matchMedia("(max-width: 1023px)").matches) {
         addOffset(map);
